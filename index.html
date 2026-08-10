@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ScholarTrack</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Study tracker</p>
+          <h1>ScholarTrack</h1>
+        </div>
+
+        <div class="top-actions">
+          <button id="add-subject-btn" class="primary-button" type="button">+ Subject</button>
+          <button id="export-data-btn" class="secondary-button" type="button">Export</button>
+          <button id="import-data-btn" class="secondary-button" type="button">Import</button>
+        </div>
+      </header>
+
+      <section class="overview-panel">
+        <div class="overall-stats">
+          <div>
+            <span class="label">Overall progress</span>
+            <strong id="overall-progress-label">0/0 done</strong>
+          </div>
+          <div class="overall-bar" aria-label="overall completion progress">
+            <span id="overall-progress-fill"></span>
+          </div>
+        </div>
+
+        <div class="filter-toolbar">
+          <label>
+            Subject
+            <select id="filter-subject">
+              <option value="all">All subjects</option>
+            </select>
+          </label>
+
+          <label>
+            Status
+            <select id="filter-status">
+              <option value="all">All</option>
+              <option value="done">Completed</option>
+              <option value="pending">Pending</option>
+            </select>
+          </label>
+
+          <label>
+            Sort by
+            <select id="filter-sort">
+              <option value="dueSoon">Due soon</option>
+              <option value="subject">Subject</option>
+              <option value="status">Completion</option>
+              <option value="newest">Newest</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <section id="weekly-report" class="report-panel"></section>
+
+      <main>
+        <div id="subject-grid" class="subject-grid"></div>
+      </main>
+    </div>
+
+    <input id="import-file" type="file" accept="application/json" class="hidden" />
+
+    <script src="script.js"></script>
+  </body>
+</html>
