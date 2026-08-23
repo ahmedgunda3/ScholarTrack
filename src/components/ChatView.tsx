@@ -36,10 +36,10 @@ export const ChatView: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // 2. Initialize Gemini API
+      // 2. Initialize Gemini API with latest model endpoint
       const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
       const genAI = new GoogleGenerativeAI(apiKey);
-      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+      const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
       // Build context prompt if a space is selected
       const contextPrefix = currentSpace 
@@ -56,17 +56,17 @@ export const ChatView: React.FC = () => {
       addMessage({
         role: 'assistant',
         content: responseText,
-        thoughtProcess: `Powered by Gemini 1.5 Flash • ${currentSpace ? currentSpace.name : 'Global Knowledge'}`,
+        thoughtProcess: `Powered by Gemini 2.5 Flash • ${currentSpace ? currentSpace.name : 'Global Knowledge'}`,
       });
 
-      // 5. 🔔 Play retro 8-bit level-up audio chime
+      // 5. Play retro 8-bit level-up audio chime
       playLevelUpSound();
 
     } catch (error) {
       console.error('Error generating response:', error);
       addMessage({
         role: 'assistant',
-        content: 'Sorry, I encountered an error connecting to Gemini. Please check your API key and network connection.',
+        content: 'Sorry, I encountered an error connecting to Gemini. Please verify your API key configuration.',
       });
     } finally {
       setIsLoading(false);
