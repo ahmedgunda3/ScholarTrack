@@ -1,16 +1,17 @@
-export type TabType = 'home' | 'chat' | 'practice';
+export type ThemeType = 'dark' | 'oled' | 'cyberpunk' | 'synthwave';
 
-export interface Space {
-  id: string;
-  name: string;
-  materialCount: number;
-  iconName: string;
+export interface UserSettings {
+  theme: ThemeType;
+  publicStreak: boolean;
+  xpNotifications: boolean;
+  dailyGoalMins: number;
 }
 
-export interface ChatMessage {
+export interface FriendActivity {
   id: string;
-  role: 'user' | 'assistant';
-  content: string;
-  timestamp: string;
-  thoughtProcess?: string;
+  name: string;
+  avatar: string;
+  streakDays: number;
+  xpToday: number;
+  lastAction: string;
 }
