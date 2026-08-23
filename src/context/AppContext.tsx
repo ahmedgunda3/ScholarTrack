@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { TabType, Space, ChatMessage } from '../types';
+import type { TabType, Space, ChatMessage } from '../types';
 import { initialSpaces, initialMessages } from '../data/mockData';
 
 interface AppContextType {

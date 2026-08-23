@@ -1,4 +1,4 @@
-import { Space, ChatMessage } from '../types';
+import type { Space, ChatMessage } from '../types';
 
 export const initialSpaces: Space[] = [
   { id: '1', name: 'Std 5 Geography & Environment', materialCount: 4, iconName: 'Globe' },
