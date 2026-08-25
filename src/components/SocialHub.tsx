@@ -1,80 +1,105 @@
-import React, { useState } from 'react';
-import { Friend, SharedNote } from '../types/scholar';
+import React from 'react';
 
 export const SocialHub: React.FC = () => {
-  const [friends] = useState<Friend[]>([
-    { id: '1', name: 'Alex K.', status: 'studying', xp: 1450, sharedNotesCount: 4 },
-    { id: '2', name: 'Sarah R.', status: 'online', xp: 210, sharedNotesCount: 1 },
-    { id: '3', name: 'David M.', status: 'offline', xp: 890, sharedNotesCount: 0 },
-  ]);
+  const leaderboard = [
+    { rank: 1, name: 'Alex K.', xp: '1,850 XP', avatar: 'AK' },
+    { rank: 2, name: 'VANE (You)', xp: '240 XP', avatar: 'V', isUser: true },
+    { rank: 3, name: 'Sarah R.', xp: '210 XP', avatar: 'SR' },
+  ];
 
-  const [notes] = useState<SharedNote[]>([
-    { id: '1', title: 'Calculus_Integration_Notes.pdf', senderName: 'Alex K.', fileSize: '2.4 MB', timestamp: '2h ago' },
-    { id: '2', title: 'Organic_Chemistry_Summary.docx', senderName: 'Sarah R.', fileSize: '1.1 MB', timestamp: '1d ago' },
-  ]);
+  const friends = [
+    { name: 'Alex K.', notes: 3 },
+    { name: 'Sarah R.', notes: 1 },
+    { name: 'David M.', notes: 5 },
+  ];
+
+  const files = [
+    { name: 'Calculus_Integration_Notes.pdf', time: 'Uploaded 2 days ago' },
+    { name: 'Organic_Chemistry_Summary.docx', time: 'Uploaded 4 days ago' },
+  ];
 
   return (
-    <div className="p-6 space-y-6 text-slate-100">
+    <div className="space-y-6 max-w-7xl mx-auto">
       <div>
-        <h1 className="text-2xl font-black">Social & Community Hub</h1>
-        <p className="text-xs text-slate-400">Leaderboards, friends list, note sharing, and direct collaboration</p>
+        <h1 className="text-2xl font-black text-white">Social & Community Hub</h1>
+        <p className="text-xs text-slate-400 mt-1">
+          Leaderboards, shared notes, and friend activity for seamless collaboration.
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-4 shadow-xl">
-          <h3 className="font-bold text-sm text-slate-300">🏆 Scholar Rankings</h3>
-          <div className="space-y-2">
-            {[
-              { rank: 1, name: 'Alex K.', streak: '14 Days', xp: '1,450 XP' },
-              { rank: 2, name: 'VANE (You)', streak: '4 Days', xp: '240 XP' },
-              { rank: 3, name: 'Sarah R.', streak: '3 Days', xp: '210 XP' },
-            ].map((user) => (
-              <div key={user.rank} className="bg-slate-950 border border-slate-800 p-3 rounded-2xl flex justify-between items-center text-xs">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 backdrop-blur-md space-y-4">
+          <h2 className="text-base font-bold text-white flex items-center gap-2">
+            🏆 Scholar Rankings
+          </h2>
+
+          <div className="space-y-2.5">
+            {leaderboard.map((user) => (
+              <div
+                key={user.name}
+                className={`flex items-center justify-between p-3.5 rounded-2xl border transition-all hover:scale-[1.01] ${
+                  user.isUser
+                    ? 'bg-violet-600/20 border-violet-500/50 text-white shadow-md shadow-violet-600/10'
+                    : 'bg-slate-800/40 border-slate-700/50 text-slate-200 hover:bg-slate-800/70'
+                }`}
+              >
                 <div className="flex items-center gap-3">
-                  <span className="font-black text-violet-400">#{user.rank}</span>
-                  <span className="font-bold">{user.name}</span>
+                  <span className="text-xs font-black text-slate-400 w-5">#{user.rank}</span>
+                  <div className="w-8 h-8 rounded-xl bg-violet-600/30 border border-violet-500/40 flex items-center justify-center text-xs font-bold text-violet-300">
+                    {user.avatar}
+                  </div>
+                  <span className="text-xs font-bold">{user.name}</span>
                 </div>
-                <div className="text-right">
-                  <span className="text-emerald-400 font-bold block">{user.xp}</span>
-                  <span className="text-[10px] text-slate-500">{user.streak}</span>
-                </div>
+                <span className="text-xs font-bold text-violet-400">{user.xp}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="lg:col-span-2 space-y-6">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-4 shadow-xl">
-            <div className="flex justify-between items-center">
-              <h3 className="font-bold text-sm text-slate-300">👥 Friends ({friends.length})</h3>
-              <button className="bg-violet-600 hover:bg-violet-500 text-xs font-bold px-3 py-1.5 rounded-xl transition">
+        <div className="space-y-6">
+          <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 backdrop-blur-md space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-bold text-white flex items-center gap-2">
+                👥 Friends ({friends.length})
+              </h2>
+              <button className="px-3.5 py-1.5 bg-violet-600 hover:bg-violet-500 hover:scale-105 active:scale-95 text-white font-bold text-xs rounded-xl transition-all cursor-pointer shadow-md shadow-violet-600/20">
                 + Add Friend
               </button>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {friends.map((f) => (
-                <div key={f.id} className="bg-slate-950 border border-slate-800 p-3.5 rounded-2xl space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className={`w-2 h-2 rounded-full ${f.status === 'online' ? 'bg-emerald-400' : f.status === 'studying' ? 'bg-violet-400 animate-pulse' : 'bg-slate-600'}`} />
-                    <span className="font-bold text-xs">{f.name}</span>
+
+            <div className="space-y-2">
+              {friends.map((friend) => (
+                <div
+                  key={friend.name}
+                  className="flex items-center justify-between p-3 bg-slate-800/40 border border-slate-700/40 rounded-2xl text-xs hover:border-slate-600 transition-colors"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    <span className="font-bold text-white">{friend.name}</span>
                   </div>
-                  <span className="text-[10px] text-slate-500 block">Shared Notes: {f.sharedNotesCount}</span>
+                  <span className="text-slate-400 font-semibold text-[11px]">Shared Notes: {friend.notes}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-4 shadow-xl">
-            <h3 className="font-bold text-sm text-slate-300">📑 Shared Notes & Library Exchange</h3>
-            <div className="space-y-2">
-              {notes.map((n) => (
-                <div key={n.id} className="bg-slate-950 border border-slate-800 p-3 rounded-2xl flex justify-between items-center text-xs">
+          <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 backdrop-blur-md space-y-4">
+            <h2 className="text-base font-bold text-white flex items-center gap-2">
+              📚 Shared Notes & Library Exchange
+            </h2>
+
+            <div className="space-y-2.5">
+              {files.map((file) => (
+                <div
+                  key={file.name}
+                  className="flex items-center justify-between p-3.5 bg-slate-800/40 border border-slate-700/40 rounded-2xl text-xs"
+                >
                   <div>
-                    <span className="font-bold block text-violet-300">{n.title}</span>
-                    <span className="text-[10px] text-slate-500">From {n.senderName} • {n.fileSize}</span>
+                    <p className="font-bold text-white">{file.name}</p>
+                    <p className="text-[10px] text-slate-400 mt-0.5">{file.time}</p>
                   </div>
-                  <button className="bg-slate-800 hover:bg-slate-700 font-bold px-3 py-1.5 rounded-xl text-xs transition">
-                    Download ⬇
+                  <button className="px-3.5 py-1.5 bg-slate-700 hover:bg-violet-600 text-white font-bold text-xs rounded-xl transition-colors cursor-pointer">
+                    Download
                   </button>
                 </div>
               ))}

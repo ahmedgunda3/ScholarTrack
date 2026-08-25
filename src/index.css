@@ -1,29 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* OLED Theme Override */
-[data-theme="oled"] {
-  --bg-primary: #000000;
-  --bg-secondary: #0a0a0a;
-  --border-color: #1f1f1f;
-  --accent-color: #3b82f6;
-  --text-main: #ffffff;
-}
 
-/* Cyberpunk Theme Override */
-[data-theme="cyberpunk"] {
-  --bg-primary: #0f051d;
-  --bg-secondary: #1a0933;
-  --border-color: #ff007f;
-  --accent-color: #00f0ff;
-  --text-main: #ffe600;
-}
-
-/* Synthwave Theme Override */
-[data-theme="synthwave"] {
-  --bg-primary: #1a103c;
-  --bg-secondary: #2b1b54;
-  --border-color: #f43f5e;
-  --accent-color: #ec4899;
-  --text-main: #f1f5f9;
+@layer utilities {
+  .btn-bounce {
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  }
+  .btn-bounce:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.4);
+  }
+  .btn-bounce:active {
+    transform: translateY(1px) scale(0.94);
+  }
+  .card-bounce {
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s ease;
+  }
+  .card-bounce:hover {
+    transform: translateY(-6px) scale(1.01);
+  }
 }
