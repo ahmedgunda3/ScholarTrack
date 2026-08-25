@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Source {
@@ -16,28 +16,44 @@ interface Space {
   exams: number;
 }
 
+const DEFAULT_SPACES: Space[] = [
+  {
+    id: 1,
+    title: 'Calculus Conquerors',
+    category: 'Math',
+    sources: [
+      { id: 101, name: 'Calculus_Integration_Guide.pdf', type: 'PDF' },
+      { id: 102, name: 'Derivatives_CheatSheet.pdf', type: 'PDF' }
+    ],
+    flashcards: 14,
+    exams: 2
+  },
+  {
+    id: 2,
+    title: 'Organic Chem Guild',
+    category: 'Chemistry',
+    sources: [{ id: 201, name: 'Reaction_Mechanisms.pdf', type: 'PDF' }],
+    flashcards: 25,
+    exams: 3
+  }
+];
+
 export const StudySpaces = () => {
-  const [spaces, setSpaces] = useState<Space[]>([
-    {
-      id: 1,
-      title: 'Calculus Conquerors',
-      category: 'Math',
-      sources: [
-        { id: 101, name: 'Calculus_Integration_Guide.pdf', type: 'PDF' },
-        { id: 102, name: 'Derivatives_CheatSheet.pdf', type: 'PDF' }
-      ],
-      flashcards: 14,
-      exams: 2
-    },
-    {
-      id: 2,
-      title: 'Organic Chem Guild',
-      category: 'Chemistry',
-      sources: [{ id: 201, name: 'Reaction_Mechanisms.pdf', type: 'PDF' }],
-      flashcards: 25,
-      exams: 3
+  const [spaces, setSpaces] = useState<Space[]>(() => {
+    const saved = localStorage.getItem('scholartrack_study_spaces');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error('Failed to load study spaces from localStorage', e);
+      }
     }
-  ]);
+    return DEFAULT_SPACES;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('scholartrack_study_spaces', JSON.stringify(spaces));
+  }, [spaces]);
 
   const [activeSpaceId, setActiveSpaceId] = useState<number | null>(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
